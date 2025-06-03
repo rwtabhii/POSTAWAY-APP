@@ -1,8 +1,8 @@
 import { UserRepository } from "./users.repository.js";
 import { applicationError } from "../../middleware/errorhandling.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { env } from "../../config/env.js";
+import jwtAuth from "../../middleware/jwttoken.js";
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
 export class UserController {
    constructor() {
