@@ -1,5 +1,5 @@
 import express from "express"
-import { postController } from "./posts.controller.js";
+import { postController } from "./post.controller.js";
 import jwtAuth from "../../middleware/jwttoken.js";
 import uploadFile from "../../middleware/fileUploadmiddleware.js";
 const postcontroller = new postController()

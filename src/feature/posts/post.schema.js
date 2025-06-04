@@ -23,7 +23,7 @@ import mongoose from "mongoose";
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "user"
+            ref: "like"
         }
     ],
     comments: [

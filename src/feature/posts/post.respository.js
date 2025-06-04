@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { postSchema } from "./post.schema.js";
 
 
-const postModel = new mongoose.model("post", postSchema);
+ export const postModel = new mongoose.model("post", postSchema);
 
 
 export class postRepository {
