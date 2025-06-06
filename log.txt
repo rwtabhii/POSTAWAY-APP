@@ -143,3 +143,38 @@
 {"level":"info","message":"/api/likes/?id=683d982d4d5e3d7a895c5e7b&type=post - undefined","service":"request-logging"}
 {"level":"info","message":"/api/likes/?id=683d982d4d5e3d7a895c5e7b&type=post - undefined","service":"request-logging"}
 {"level":"info","message":"/api/likes/?id=683d982d4d5e3d7a895c5e7b&type=post - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look woow\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/683d982d4d5e3d7a895c5e7b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/683d982d4d5e3d7a895c5e7b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/683d982d4d5e3d7a895c5e7b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/683d982d4d5e3d7a895c5e7b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look hot\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/683d982d4d5e3d7a895c5e7b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842df27ea627b9e0e4850d9 - {\"content\":\"looking HOT\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842df27ea627b9e0e4850d9 - {\"content\":\"looking HOT\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842df27ea627b9e0e4850d9 - {\"content\":\"looking HOT\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842df27ea627b9e0e4850d9 - {\"content\":\"looking HOT\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842e90dec541b13e1c086ec - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look hot\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d982d4d5e3d7a895c5e7b\",\"content\":\"look hot\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look hot\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look osm\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842ed8b232aa2ed777b52ea - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look osm\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842ed97232aa2ed777b52ee - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look \"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842ee1ceb7d99f5063703c4 - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look \"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842eeb4da64250867028ef9 - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look hhh\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842eff83044d1510b27535b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842eff83044d1510b27535b - undefined","service":"request-logging"}
+{"level":"info","message":"/api/comments/ - {\"postid\":\"683d98344d5e3d7a895c5e7d\",\"content\":\"look hhh\"}","service":"request-logging"}
+{"level":"info","message":"/api/comments/6842ef8180542f99beaa5ef7 - undefined","service":"request-logging"}
