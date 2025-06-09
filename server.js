@@ -1,6 +1,5 @@
 import  {env} from  "./src/config/env.js";
 import express from "express";
-
 import jwtAuth from "./src/middleware/jwttoken.js";
 import userRouter from "./src/feature/users/users.route.js"
 import postRouter from "./src/feature/posts/post.route.js"
@@ -9,6 +8,8 @@ import likeRouter from "./src/feature/likes/like.route.js";
 import uploadFile from "./src/middleware/fileUploadmiddleware.js"
 import { applicationError } from "./src/middleware/errorhandling.js"
  //import bookmarkRoute from "./src/feature/bookmarks/bookmark.route.js";
+ import friendshipRoute from "./src/feature/friendships/friendship.route.js";
+
 import loggerMiddleware from "./src/utils/logger.middleware.js"
 import { createDbConnection } from "./src/config/mongodb.config.js";
 import cookieParser from "cookie-parser";
@@ -23,6 +24,7 @@ server.use("/api/users",userRouter);
 server.use("/api/posts",postRouter);
 server.use("/api/likes",likeRouter);
 server.use("/api/comments",commentRouter);
+server.use("/api/friends",friendshipRoute)
 // server.use("/api/bookmarks",bookmarkRoute);
 server.use((req,res)=>{
   return res.status(404).send("Api route not found");
