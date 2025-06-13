@@ -9,6 +9,7 @@ import uploadFile from "./src/middleware/fileUploadmiddleware.js"
 import { applicationError } from "./src/middleware/errorhandling.js"
  //import bookmarkRoute from "./src/feature/bookmarks/bookmark.route.js";
  import friendshipRoute from "./src/feature/friendships/friendship.route.js";
+ import resetpassRouter from "./src/feature/resetpassword/resetpass.route.js";
 
 import loggerMiddleware from "./src/utils/logger.middleware.js"
 import { createDbConnection } from "./src/config/mongodb.config.js";
@@ -25,7 +26,7 @@ server.use("/api/posts",postRouter);
 server.use("/api/likes",likeRouter);
 server.use("/api/comments",commentRouter);
 server.use("/api/friends",friendshipRoute)
-// server.use("/api/bookmarks",bookmarkRoute);
+server.use("/api/otp",resetpassRouter);
 server.use((req,res)=>{
   return res.status(404).send("Api route not found");
 });

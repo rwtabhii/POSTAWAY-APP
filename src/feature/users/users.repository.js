@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { userSchema } from "./users.schema.js";
-const userModel = new mongoose.model("user", userSchema);
+export  const userModel = new mongoose.model("user", userSchema);
 
 export class UserRepository {
     async userRegister(userData) {
