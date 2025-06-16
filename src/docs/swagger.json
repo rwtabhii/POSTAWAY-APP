@@ -1,0 +1,1543 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "version": "1.0.0",
+    "description": "Postaway Backend all  API's",
+    "title": "Postaway-App"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Backend server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "in": "header",
+        "name": "Authorization",
+        "type": "apiKey",
+        "description": "Enter Your JWT Token"
+      }
+    }
+  },
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "tags": [
+          "User Auth"
+        ],
+        "summary": "User Registeration",
+        "description": "User Registeration to use the Web Application",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "mobile": {
+                    "type": "number"
+                  },
+                  "age": {
+                    "type": "number"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "email",
+                "mobile",
+                "age",
+                "password"
+              ]
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Validation Errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "WeakPassword": {
+                    "summary": "Weak Password",
+                    "value": {
+                      "success": false,
+                      "msg": "Password must be at least 8 characters"
+                    }
+                  },
+                  "EmailExists": {
+                    "summary": "Email Already Exists",
+                    "value": {
+                      "success": false,
+                      "msg": "Email already registered"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/users/signin": {
+      "post": {
+        "tags": [
+          "User Auth"
+        ],
+        "summary": "User Login",
+        "description": "Authenticate user with email and password and return JWT token in cookie.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "abc123@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Abc@1234"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User login successful",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "JWT token set as HttpOnly cookie"
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "User login successful",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials or input",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "msg": "Incorrect Credentials"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "msg": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "get": {
+        "tags": [
+          "User Auth"
+        ],
+        "summary": "Logout user",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "logout successful"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/": {
+      "get": {
+        "tags": [
+          "User Auth"
+        ],
+        "summary": "Get All Users Data",
+        "description": "Fetch All Users Profile. Required JWT Authentication",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get One User Data",
+        "description": "Fetch a single user's profile by user ID. Requires JWT authentication.",
+        "tags": [
+          "User Auth"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The unique ID of the user to retrieve",
+            "schema": {
+              "type": "string",
+              "example": "664fbc7e941eb8efddc403f1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": {
+                    "_id": "664fbc7e941eb8efddc403f1",
+                    "name": "Abhishek",
+                    "email": "abhishek@example.com",
+                    "avatar": "avatar.jpg",
+                    "gender": "male"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/users/details/{id}": {
+      "patch": {
+        "summary": "Update User Profile",
+        "description": "Allows the user to update their profile details such as name, gender, or avatar.",
+        "tags": [
+          "User Auth"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user whose profile is to be updated",
+            "schema": {
+              "type": "string",
+              "example": "664fbc7e941eb8efddc403f1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Abhishek"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female",
+                      "other"
+                    ],
+                    "example": "male"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Profile updated successfully",
+                  "res": {
+                    "_id": "664fbc7e941eb8efddc403f1",
+                    "name": "Abhishek",
+                    "gender": "male",
+                    "avatar": "profile123.jpg"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or bad input"
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/posts/": {
+      "get": {
+        "summary": "Get All Posts",
+        "description": "Fetch all public posts sorted by creation time (newest first). JWT token required.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "664ff5e541b97caa9e01003a",
+                      "userId": {
+                        "_id": "664fbc7e941eb8efddc403f1",
+                        "name": "Abhishek",
+                        "avatar": "avatar.jpg"
+                      },
+                      "content": "My first post",
+                      "image": "post.jpg",
+                      "status": "public",
+                      "likes": [],
+                      "comments": [],
+                      "createdAt": "2024-06-15T10:12:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/posts/user": {
+      "get": {
+        "summary": "Get Logged-in User's Posts",
+        "description": "Fetch posts created by the authenticated user. Optional query param `status` can be used to filter posts.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter posts by status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "public",
+                "draft",
+                "archived"
+              ],
+              "example": "draft"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "664ff6b741b97caa9e01004f",
+                      "userId": "664fbc7e941eb8efddc403f1",
+                      "content": "Draft content",
+                      "status": "draft",
+                      "createdAt": "2024-06-10T12:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid JWT token"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/posts/draft": {
+      "get": {
+        "summary": "Get User's Draft Posts",
+        "description": "Fetch all draft posts created by the logged-in user. Requires a valid JWT token.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "665123a541b97caa9e010055",
+                      "userId": "664fbc7e941eb8efddc403f1",
+                      "content": "This is a draft post",
+                      "status": "draft",
+                      "image": "draft_img.jpg",
+                      "createdAt": "2024-06-01T10:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — Missing or invalid JWT token"
+          },
+          "404": {
+            "description": "No draft posts found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/posts/archived": {
+      "get": {
+        "summary": "Get User's Archived Posts",
+        "description": "Fetch all archived posts created by the logged-in user. Requires JWT token.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archived posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "665999aa41b97caa9e010099",
+                      "userId": "664fbc7e941eb8efddc403f1",
+                      "content": "Archived post content",
+                      "status": "archived",
+                      "image": "archived_post.jpg",
+                      "createdAt": "2024-06-05T15:30:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — Missing or invalid JWT token"
+          },
+          "404": {
+            "description": "No archived posts found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/posts/{id}": {
+      "get": {
+        "summary": "Get Post by ID",
+        "description": "Fetch the details of a specific post using its unique ID. JWT token is required.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The unique ID of the post",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011223"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": {
+                    "_id": "665abc32141b97caa9e011223",
+                    "userId": {
+                      "_id": "664fbc7e941eb8efddc403f1",
+                      "name": "Abhishek",
+                      "avatar": "avatar.jpg"
+                    },
+                    "content": "This is a single post content",
+                    "status": "public",
+                    "image": "post_img.jpg",
+                    "likes": [],
+                    "comments": [],
+                    "createdAt": "2024-06-01T12:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — Missing or invalid JWT token"
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a Post",
+        "description": "Update a post using its ID. The user must be the author. JWT token is required.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the post to be updated",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011223"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "example": "Updated post content"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "public",
+                      "draft",
+                      "archived"
+                    ],
+                    "example": "public"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "New post image (optional)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Post updated successfully",
+                  "res": {
+                    "_id": "665abc32141b97caa9e011223",
+                    "content": "Updated post content",
+                    "status": "public",
+                    "image": "new_post_img.jpg",
+                    "createdAt": "2024-06-01T12:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or bad request"
+          },
+          "401": {
+            "description": "Unauthorized — Token missing or invalid"
+          },
+          "404": {
+            "description": "Post not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Post",
+        "description": "Delete a post by its ID. The user must be the owner of the post. Requires JWT token.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the post to delete",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011223"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Post deleted successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — Missing or invalid token"
+          },
+          "403": {
+            "description": "Forbidden — User is not the post owner"
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/posts/add": {
+      "post": {
+        "summary": "Create New Post",
+        "description": "Allows a user to create a new post with optional image. Requires JWT authentication.",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "example": "This is my latest post!"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "public",
+                      "draft",
+                      "archived"
+                    ],
+                    "example": "public"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Optional image file for the post"
+                  }
+                },
+                "required": [
+                  "content",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Post uploaded successfully",
+                  "res": {
+                    "_id": "665abc32141b97caa9e011223",
+                    "content": "This is my latest post!",
+                    "status": "public",
+                    "image": "post_img.jpg",
+                    "createdAt": "2024-06-15T12:30:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error (missing content/status)"
+          },
+          "401": {
+            "description": "Unauthorized — JWT token missing or invalid"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/likes/": {
+      "get": {
+        "summary": "Get Likes on a Post",
+        "description": "Returns all users who liked a specific post. Requires a post ID as query param and JWT token.",
+        "tags": [
+          "Like"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "query",
+            "required": true,
+            "description": "ID of the post to fetch likes for",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011223"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Likes retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": {
+                    "post": {
+                      "_id": "665abc32141b97caa9e011223",
+                      "content": "Post content"
+                    },
+                    "likes": [
+                      {
+                        "_id": "664fbc7e941eb8efddc403f1",
+                        "name": "Abhishek",
+                        "avatar": "avatar.jpg"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid token"
+          },
+          "404": {
+            "description": "Post not found"
+          }
+        }
+      }
+    },
+    "/api/likes/toggle/{id}": {
+      "post": {
+        "summary": "Like or Dislike a Post",
+        "description": "Toggle a like for a post. If already liked, it will remove the like. If not, it will add a like. Requires JWT token.",
+        "tags": [
+          "Like"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the post to like or dislike",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011223"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Like added or removed successfully",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "LikeAdded": {
+                    "summary": "Like added",
+                    "value": {
+                      "success": true,
+                      "res": {
+                        "msg": "Like added successfully",
+                        "statusCode": 201
+                      }
+                    }
+                  },
+                  "LikeRemoved": {
+                    "summary": "Like removed",
+                    "value": {
+                      "success": true,
+                      "res": {
+                        "msg": "Dislike post successfully",
+                        "statusCode": 201
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid token"
+          },
+          "404": {
+            "description": "Post not found"
+          }
+        }
+      }
+    },
+    "/api/comments/{postid}": {
+      "get": {
+        "summary": "Get Comments on a Post",
+        "description": "Fetch all comments on a specific post using post ID. JWT token required.",
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "postid",
+            "in": "path",
+            "required": true,
+            "description": "Post ID to fetch comments for",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011223"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comments retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "666ab0de12345",
+                      "postId": "665abc32141b97caa9e011223",
+                      "userId": {
+                        "_id": "user123",
+                        "name": "Abhishek"
+                      },
+                      "content": "Great post!",
+                      "createdAt": "2024-06-10T10:00:00Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/comments/": {
+      "post": {
+        "summary": "Add a Comment",
+        "description": "Add a comment to a specific post. JWT token required.",
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "postid": {
+                    "type": "string",
+                    "example": "665abc32141b97caa9e011223"
+                  },
+                  "content": {
+                    "type": "string",
+                    "example": "Awesome post!"
+                  }
+                },
+                "required": [
+                  "postid",
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Comment added successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Comment added successfully",
+                  "res": {
+                    "_id": "comment456",
+                    "content": "Awesome post!"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/api/comments/{id}": {
+      "put": {
+        "summary": "Update a Comment",
+        "description": "Update a comment's content by its ID. Only the comment author can update. JWT required.",
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Comment ID to update",
+            "schema": {
+              "type": "string",
+              "example": "666def7890abc"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "example": "Updated comment text"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comment updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Comment updated"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — Not the comment author"
+          },
+          "404": {
+            "description": "Comment not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Comment",
+        "description": "Delete a comment by its ID. Can be deleted by the comment author or post owner. JWT token required.",
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Comment ID to delete",
+            "schema": {
+              "type": "string",
+              "example": "666def7890abc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Comment deleted successfully"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — Not allowed to delete this comment"
+          },
+          "404": {
+            "description": "Comment not found"
+          }
+        }
+      }
+    },
+    "/api/friends/": {
+      "get": {
+        "summary": "Get All Friends",
+        "description": "Returns a list of all accepted friends of the logged-in user.",
+        "tags": [
+          "Friendship"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend list retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "friendshipId123",
+                      "sender": {
+                        "_id": "user1",
+                        "name": "Abhishek"
+                      },
+                      "receiver": {
+                        "_id": "user2",
+                        "name": "Ravi"
+                      },
+                      "status": "accepted"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/friends/req": {
+      "get": {
+        "summary": "Get Friend Requests",
+        "description": "Get all pending friend requests received by the logged-in user.",
+        "tags": [
+          "Friendship"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend requests fetched successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "res": [
+                    {
+                      "_id": "requestId123",
+                      "sender": {
+                        "_id": "user123",
+                        "name": "Raj"
+                      },
+                      "status": "pending"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/friends/friendreq/{id}": {
+      "post": {
+        "summary": "Send Friend Request",
+        "description": "Send a friend request to another user by their user ID.",
+        "tags": [
+          "Friendship"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to send a friend request to",
+            "schema": {
+              "type": "string",
+              "example": "665abc32141b97caa9e011998"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Friend request sent successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Friend request sent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request already exists or invalid"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/friends/togglereq": {
+      "patch": {
+        "summary": "Accept or Reject Friend Request",
+        "description": "Accept or reject a pending friend request by sending the request ID and action.",
+        "tags": [
+          "Friendship"
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reqid": {
+                    "type": "string",
+                    "example": "667789e77ff12a001ddccf00"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "accepted",
+                      "rejected"
+                    ],
+                    "example": "accepted"
+                  }
+                },
+                "required": [
+                  "reqid",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Friend request status updated",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Friend request accepted"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Friend request not found"
+          }
+        }
+      }
+    },
+    "/api/otp/send": {
+      "post": {
+        "summary": "Send OTP for Password Reset",
+        "description": "Sends a 6-digit OTP to the user's email if the account exists.",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "tags": [
+          "OTP"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "OTP sent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/otp/verify": {
+      "post": {
+        "summary": "Verify OTP",
+        "description": "Verifies the OTP sent to the user's email address.",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "tags": [
+          "OTP"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                },
+                "required": [
+                  "email",
+                  "otp"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP verified successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "OTP verified"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired OTP"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "OTP not found"
+          }
+        }
+      }
+    },
+    "/api/otp/reset-password": {
+      "post": {
+        "summary": "Reset Password",
+        "description": "Allows user to reset password after OTP verification.",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "tags": [
+          "OTP"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "example": "NewPass@123"
+                  }
+                },
+                "required": [
+                  "email",
+                  "newPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "msg": "Password reset successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Password policy failed or invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "User not found or OTP not verified"
+          }
+        }
+      }
+    }
+  }
+}

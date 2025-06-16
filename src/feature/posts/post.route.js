@@ -25,7 +25,7 @@ postRouter.get("/:id",jwtAuth, (req, res, next) => {
 postRouter.post("/add", jwtAuth, uploadFile.single("image"), (req, res, next) => {
     postcontroller.addPost(req, res, next)
 });
-postRouter.put("/:id", jwtAuth, uploadFile.single("image"), (req, res, next) => {
+postRouter.patch("/:id", jwtAuth, uploadFile.single("image"), (req, res, next) => {
     postcontroller.updatePost(req, res, next)
 });
 postRouter.delete("/:id", jwtAuth, (req, res, next) => {

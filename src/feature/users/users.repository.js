@@ -47,24 +47,27 @@ export class UserRepository {
     async login(userData) {
         try {
             const { email, password } = userData;
+
             const user = await userModel.findOne({ email });
 
             if (!user) {
                 return {
                     success: false,
                     error: {
-                        msg: "Incorrect Credentials",
+                        msg: "Account Doesn't exist",
                         statusCode: 400,
                     },
                 };
             }
-
+              console.log(password );
+              console.log(user.password);
             const isMatch = await bcrypt.compare(password, user.password);
+            console.log(isMatch);
             if (!isMatch) {
                 return {
                     success: false,
                     error: {
-                        msg: "Incorrect Credentials",
+                        msg: "Incorrect Password",
                         statusCode: 400,
                     },
                 };

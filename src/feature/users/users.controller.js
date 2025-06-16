@@ -43,6 +43,7 @@ export class UserController {
    async signin(req, res, next) {
       try {
          const resp = await this.userRepo.login(req.body);
+         console.log(resp);
 
          if (resp.success) {
             const token = jwt.sign({ _id: resp.res._id }, env.jwtSecret, {

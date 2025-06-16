@@ -5,7 +5,6 @@ import userRouter from "./src/feature/users/users.route.js"
 import postRouter from "./src/feature/posts/post.route.js"
 import likeRouter from "./src/feature/likes/like.route.js";
  import commentRouter from "./src/feature/comments/comment.route.js";
-import uploadFile from "./src/middleware/fileUploadmiddleware.js"
 import { applicationError } from "./src/middleware/errorhandling.js"
  //import bookmarkRoute from "./src/feature/bookmarks/bookmark.route.js";
  import friendshipRoute from "./src/feature/friendships/friendship.route.js";
@@ -14,13 +13,17 @@ import { applicationError } from "./src/middleware/errorhandling.js"
 import loggerMiddleware from "./src/utils/logger.middleware.js"
 import { createDbConnection } from "./src/config/mongodb.config.js";
 import cookieParser from "cookie-parser";
+import swagger from "swagger-ui-express";
+import fs from "fs";
 
 
 const server = express();
 server.use(express.json())
 server.use(loggerMiddleware);
 server.use(cookieParser());
-
+// swagger docs
+const swaggerDocs = JSON.parse(fs.readFileSync("./src/docs/swagger.json","utf-8"))
+server.use("/apidocs",swagger.serve,swagger.setup(swaggerDocs))
 server.use("/api/users",userRouter);
 server.use("/api/posts",postRouter);
 server.use("/api/likes",likeRouter);

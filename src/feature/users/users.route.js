@@ -27,7 +27,7 @@ userRouter.get("/",jwtAuth,(req,res,next)=>{
     usercontroller.getAllUserData(req,res,next)
 })             
 
-userRouter.post("/details/:id",jwtAuth,uploadFile.single("avatar"),(req,res,next)=>{
+userRouter.patch("/details/:id",jwtAuth,uploadFile.single("avatar"),(req,res,next)=>{
     usercontroller.updateUserProifle(req,res,next);
 })             
 export default userRouter;
