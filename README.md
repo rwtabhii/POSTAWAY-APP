@@ -73,7 +73,10 @@ npm install
 3. Create a `.env` file and add the required variables:
 ```
 PORT=3000
-JWT_SECRET=your_jwt_secret
+JWT_TOKEN=your_jwt_secret
+MONGODB_URL=yourmongourl
+EMAIL_USER=youremailfor nodemailer
+EMAIL_PASS=yourpassword  generated in gmail for application
 ```
 
 4. Start the development server:
