@@ -1,6 +1,6 @@
 # Postaway Backend
 
-Postaway is a backend project built using Node.js and Express.js following REST API architecture & with Database of MongoDB ORM liberary Mongoose. It includes features for managing users, posts, likes, and comments. The APIs are tested using Postman. & Documentation using Swagger
+Postaway is a backend project built using Node.js and Express.js following REST API architecture & with Database of MongoDB ORM liberary Mongoose. It includes features for managing users, posts, likes, friend Request , OTP based pass Reset  and comments. The APIs are tested using Postman. & Documentation using Swagger
 
 ## Features
 
@@ -21,13 +21,19 @@ Postaway is a backend project built using Node.js and Express.js following REST 
 - **Likes**
   - Like and unlike posts
 
+- **Friend Request**
+  - Send, Accept ,Reject and Check Pending Req 
+
 ## Tech Stack
 
 - Node.js
 - Express.js
 - Multer (For File Upload)
+- Bcrypt liberary for hashed password 
 - JSON Web Token (JWT) for authentication
+- OTP based password reset -- Using NODEMAILER
 - Postman for API testing
+- Swagger based API Docs 
 
 ## Folder Structure
 ```
@@ -77,29 +83,8 @@ npm run dev
 
 ## API Testing
 
-All routes are tested using **Postman**. Import the Postman collection or manually test the following endpoints:
-
-### User Routes
-- `POST /api/users/register`
-- `POST /api/users/login`
-- `GET  /api/users/logout`
-- `GET /api/users/:id`    
-- `GET /api/users/`
-- `POST /api/users/details` 
-
-### Post Routes
-- `GET /api/posts`
-- `POST /api/posts`
-- `PUT /api/posts/:id`
-- `DELETE /api/posts/:id`
-
-### Comment Routes
-- `POST /api/comments/:postId`
-- `DELETE /api/comments/:commentId`
-
-### Like Routes
-- `POST /api/likes/:postId`
-- `DELETE /api/likes/:postId`
+All routes are tested using **Postman**. 
+Import the [Postman collection] (POSTAWAY_APPP\src\docs\postaway Api testing.postman_collection.json)
 
 ---
 

@@ -7,7 +7,8 @@ const friendshipModel = new mongoose.model("friendship", friendshipSchema);
 export class friendshipRepository {
     async getUserFriends(userId, status) {
         try {
-            const userFriends = await friendshipModel.find({ reciever: userId, status: "accepted" });
+            const userFriends = await friendshipModel.find({ reciever: userId, status: "accepted" })
+            .populate("sender", "name gender avatar -_id");
             if (userFriends.length > 0) {
                 return {
                     success: true,
