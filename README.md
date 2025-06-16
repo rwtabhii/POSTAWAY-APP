@@ -22,8 +22,10 @@ Postaway is a backend project built using Node.js and Express.js following REST 
   - Like and unlike posts
 
 - **Friend Request**
-  - Send, Accept ,Reject and Check Pending Req 
+  - Send, Accept ,Reject and Check Pending Req
 
+- ** ResetPassword using OTP (nodemailer)
+- sending otp, verify otp & resetpass    
 ## Tech Stack
 
 - Node.js
